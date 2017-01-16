@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div ng-app="myApp">
+    <div ng-controller="HomeController as vm">
+        Make : <ui-select ng-model="vm.MakeID" style="max-width: 180px" ng-change="vm.GetModel()">
+                 <ui-select-match placeholder=" pick a make" allow-clear="true">
+                                           {{$select.selected.makeName}}</ui-select-match>
+                   <ui-select-choices repeat="item.makeId as item in (vm.MakeList| filter: $select.search) track by item.makeId">
+
+                       <span ng-bind-html="item.makeName | highlight: $select.search"></span> 
+                       
+                   </ui-select-choices>
+    @*ng-options="item.MakeId as item.MakeName for item in MakeList track by item.MakeId"
+        ng-change="GetModel()">*@
+
+</ui-select>
+        Model:  <ui-select ng-model="vm.ModelID" title="Model" style="max-width: 180px" ng-disabled="!vm.MakeList">
+    <ui-select-match placeholder="Pick a Model" allow-clear="true">
+        {{$select.selected.modelulName}}
+    </ui-select-match>
+    <ui-select-choices repeat="item.modelId as item in (vm.ModelList|filter: $select.search) track by item.modelId">
+        <span ng-bind-html="item.modelulName | highlight:$select.search"></span>
+    </ui-select-choices>
+
+    @*ng-options="item.ModelulId as item.ModelulName for item in vm.ModelList track by item.ModelulId">*@
+
+</ui-select>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <ui-select ng-model="vm.priceMin" class="col-lg-5 col-sm-4" ng-change="vm.myMin()">
+                        <ui-select-match placeholder="Price min" allow-clear="true">{{($select.selected | number : "0") + " Ron"}}</ui-select-match>
+                        <ui-select-choices repeat="something in vm.myNumbers($select.search) | filter: $select.search">
+                            <div ng-bind="(something | number : '0')+ ' Ron'"></div>
+                        </ui-select-choices>
+
+                    </ui-select>
+                </div>
+                <div class="col-sm-4">
+                    <ui-select ng-model="vm.priceMax" class="col-lg-5 col-sm-4" ng-change="vm.myMax()">
+                        <ui-select-match placeholder="Price max" allow-clear="true">{{($select.selected | number : "0") + " Ron"}}</ui-select-match>
+                        <ui-select-choices repeat="something in vm.myNumbers($select.search) | filter: $select.search">
+                            <div ng-bind="(something | number : '0') + ' Ron'"> bani </div>
+                        </ui-select-choices>
+
+                    </ui-select>
+                </div>
+                
+            </div>
+        </div>
+        <div class="container">
+            <h2>Fuel</h2>
+            <div class="btn-group" >
+                <label class="btn btn-primary" ng-model="vm.fuel" uib-btn-radio="'Diesel'">Diesel</label>
+                <label class="btn btn-primary" ng-model="vm.fuel" uib-btn-radio="'Benzina'">Benzina</label>
+                <label class="btn btn-primary" ng-model="vm.fuel" uib-btn-radio="'Electric'">Electric</label>
+                <label class="btn btn-primary" ng-model="vm.fuel" uib-btn-radio="'Gaz'">Gaz</label>
+            </div>
+            <h2>FUEL : {{vm.fuel|| 'null'}}</h2>
+        </div>
+
+
+
+
+
+        <input type="button" value="Show Result" class="btn btn-primary" ng-click="vm.Search()"/>
+        
+        <div class="table-responsive">
+            <table id="anuntTable" class="table table-condensed table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <td> Nume </td>
+                        <td>Price</td>
+                        <td>Fuel </td>
+                    </tr>
+               </thead>
+                <tbody>
+                    <tr ng-repeat="item in vm.Anunts">
+                        <td>
+                            {{item.nameAnunt}}
+                        </td>
+                        <td>
+                            {{item.price | currency: '$'}}
+                        </td>
+                        <td>
+                            {{item.fuel}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+@section scripts{
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular-sanitize.min.js"></script>
+<script src="~/Scripts/select.min.js"></script>
+<script src="~/Scripts/angular-ui/ui-bootstrap.min.js"></script>
+<script src="~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+
+<script src="~/AngularApp/app.js"></script>
+<script src="~/AngularApp/HomeController.js"></script>
+}
