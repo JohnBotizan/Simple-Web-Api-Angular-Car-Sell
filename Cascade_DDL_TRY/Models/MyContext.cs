@@ -33,5 +33,7 @@ namespace Cascade_DDL_TRY.Models
         public DbSet<Modelul> ModelulSet { get; set; }
         public DbSet<Anunt> Anunts { get; set; }
         public DbSet<AditionalFeature> AditionalFeatures { get; set; }
+
+        public DbSet<AnuntAditionalFeatures> AnuntAditionalFeatures { get; set; }
     }
 }

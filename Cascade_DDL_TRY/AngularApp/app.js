@@ -1,3 +1,3 @@
 ﻿(function () {
-    var app = angular.module("myApp", ["ui.select", "ngSanitize", "ui.bootstrap"]);
+    var app = angular.module("myApp", ["ui.select", "ngSanitize"]);
 })();

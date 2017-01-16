@@ -12,7 +12,11 @@ namespace Cascade_DDL_TRY.Models
         IQueryable<Modelul> AllModelsFromMake(int makeId);
         IQueryable<Anunt> AllAnuntsFromModel(int? modelId);
         IQueryable<Anunt> AllAnuntsFromMake(int? makeId);
-        
+        IQueryable<AditionalFeature> AllFeaturesFromAnunt(int anuntId);
+
+        IQueryable<Anunt> AllAnuntsForFeature(int featureId);
+     
+   
     }
     public class MyRepository : IRepository  
     {
@@ -47,7 +51,24 @@ namespace Cascade_DDL_TRY.Models
         {
             return ctx.Anunts.Include("Modelul").Include("Modelul.Makeul").Where(p => p.Modelul.MakeId == makeId).OrderBy(p => p.Price);
         }
-        
        
+        public IQueryable<AditionalFeature> AllFeatures()
+        {
+            return ctx.AditionalFeatures.OrderBy(p => p.NameAditionalFeature);
+        }
+
+
+        public IQueryable<AditionalFeature> AllFeaturesFromAnunt(int anuntId)
+        {
+            return ctx.AnuntAditionalFeatures.Where(p => p.Anunt.AnuntId==anuntId).Select(p => p.AditionalFeature);
+         
+        }
+       public IQueryable<Anunt> AllAnuntsForFeature(int featureId)
+        {
+            return ctx.AnuntAditionalFeatures.Where(p => p.AditionalFeature.AditionalFeatureId == featureId)
+                                             .Select(p => p.Anunt);
+        }
+
+
     }
 }

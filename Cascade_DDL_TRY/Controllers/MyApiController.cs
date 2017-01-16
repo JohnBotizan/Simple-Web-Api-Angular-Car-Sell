@@ -1,5 +1,4 @@
-﻿
-using Cascade_DDL_TRY.Models;
+﻿using Cascade_DDL_TRY.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +36,8 @@ namespace Cascade_DDL_TRY.Controllers
             {
                 result = NotFound();
             }
-            
-            return result; 
+
+            return result;
 
         }
 
@@ -46,14 +45,14 @@ namespace Cascade_DDL_TRY.Controllers
         public IHttpActionResult GetModel(int makeID)
         {
             IHttpActionResult result;
-                  
-          var  modelList =  repo.AllModelsFromMake(makeID)
-                                .ToList()
-                                .Select(p=> _modelFactory.Create(p));
-           
-              
-            
-            if(modelList.Count() >0)
+
+            var modelList = repo.AllModelsFromMake(makeID)
+                                  .ToList()
+                                  .Select(p => _modelFactory.Create(p));
+
+
+
+            if (modelList.Count() > 0)
             {
                 result = Ok(modelList);
             }
@@ -61,12 +60,12 @@ namespace Cascade_DDL_TRY.Controllers
             {
                 result = NotFound();
             }
-            return result; 
+            return result;
 
         }
-            
+
         [Route("api/MyApi/GetAnunt/Make/{makeID}/Model/{modelID?}/Filter")]
-        public IHttpActionResult GetAnunt(int makeID, int? modelID,[FromUri]SearchAnunt search)
+        public IHttpActionResult GetAnunt(int makeID, int? modelID, [FromUri]SearchAnunt search)
         {
             IHttpActionResult result;
 
@@ -76,10 +75,10 @@ namespace Cascade_DDL_TRY.Controllers
                                         : repo.AllAnuntsFromMake(makeID)
                                                 .ToList()
                                                 .Select(p => _modelFactory.Create(p));
-           
-            anunts = anunts.Where(p => (search.PriceMin == null? true : p.Price >= search.PriceMin)&& 
-                                       (search.PriceMax == null? true : p.Price <=search.PriceMax)&&
-                                       (string.IsNullOrEmpty(search.Fuel)? true: p.Fuel.ToString()==search.Fuel));
+
+            anunts = anunts.Where(p => (search.PriceMin == null ? true : p.Price >= search.PriceMin) &&
+                                       (search.PriceMax == null ? true : p.Price <= search.PriceMax) &&
+                                       (string.IsNullOrEmpty(search.Fuel) ? true : p.Fuel.ToString() == search.Fuel));
             if (anunts.Count() > 0)
             {
                 result = Ok(anunts);
@@ -89,9 +88,7 @@ namespace Cascade_DDL_TRY.Controllers
                 result = NotFound();
             }
 
-            return result; 
+            return result;
         }
-
-       
     }
 }

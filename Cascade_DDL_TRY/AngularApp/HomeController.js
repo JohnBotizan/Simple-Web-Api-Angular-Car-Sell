@@ -11,7 +11,6 @@
         vm.Result = "";
         vm.priceMin = "";
         vm.priceMax = "";
-        vm.fuel = '';
         //HERE STARTS the Min
         vm.myMin = function () {
 
@@ -55,11 +54,9 @@
         vm.Search = function () {
             vm.MakeID = vm.MakeID || 0;
             vm.ModelID = vm.ModelID || 0;
-          
             var search = {
                 priceMin: parseInt(vm.priceMin) ,
-                priceMax: parseInt(vm.priceMax),
-                fuel: vm.fuel
+                priceMax: parseInt(vm.priceMax)
             };
 
 
