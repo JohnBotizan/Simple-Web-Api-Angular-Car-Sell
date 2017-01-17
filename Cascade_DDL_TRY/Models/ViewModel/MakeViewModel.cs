@@ -28,15 +28,26 @@ namespace Cascade_DDL_TRY.Models
         public string NameAnunt { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-                
+
+        public IEnumerable<AditionalFeaturesViewModel> AdFeatures { get; set;  }   
         public Fuel Fuel { get; set; }
     }
+
+    public class AditionalFeaturesViewModel
+    {
+        public int AditionalFeaturesId { get; set; }
+        public string FeatureName { get; set; }
+    }
+
     public class SearchAnunt
     {
         public decimal? PriceMin { get; set; }
         public decimal? PriceMax { get; set; }
 
         public string Fuel { get; set; }
+
+        public int[] Features { get; set; }
+
     }
 }
 

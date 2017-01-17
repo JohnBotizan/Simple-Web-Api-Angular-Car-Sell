@@ -52,7 +52,7 @@ namespace Cascade_DDL_TRY.Models
     {
         public Anunt()
         {
-            AditionalFeatures = new List<AnuntAditionalFeatures>();
+            AditionalFeatures = new List<AditionalFeature>();
         }
         public int AnuntId { get; set; }
         public string AnuntName { get; set; }
@@ -70,9 +70,9 @@ namespace Cascade_DDL_TRY.Models
         public Fuel Fuel { get; set; }
         public virtual Modelul Modelul { get; set; }
         public int ModelulId { get; set; }
-        public virtual ICollection<AnuntAditionalFeatures> AditionalFeatures { get; set; }
+        public virtual ICollection<AditionalFeature> AditionalFeatures { get; set; }
     }
-       
+      //Junction DbSet not sure if needed so deactivate  
     public class AnuntAditionalFeatures
     {
         public int AnuntAditionalFeaturesId { get; set;}
@@ -86,13 +86,13 @@ namespace Cascade_DDL_TRY.Models
     {
         public AditionalFeature()
         {
-            Anunts = new List<AnuntAditionalFeatures>();
+            Anunts = new List<Anunt>();
         }
         [Key]
         public int AditionalFeatureId { get; set; }
         public string NameAditionalFeature { get; set; }
 
-        public virtual ICollection<AnuntAditionalFeatures> Anunts { get; set; }
+        public virtual ICollection<Anunt> Anunts { get; set; }
     }
 
 }

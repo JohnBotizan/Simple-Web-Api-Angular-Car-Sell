@@ -15,7 +15,8 @@ namespace Cascade_DDL_TRY.Models
         IQueryable<AditionalFeature> AllFeaturesFromAnunt(int anuntId);
 
         IQueryable<Anunt> AllAnuntsForFeature(int featureId);
-     
+        IQueryable<Anunt> AllAnuntsWithMultipleFeatures(int[] features);
+       
    
     }
     public class MyRepository : IRepository  
@@ -60,13 +61,40 @@ namespace Cascade_DDL_TRY.Models
 
         public IQueryable<AditionalFeature> AllFeaturesFromAnunt(int anuntId)
         {
-            return ctx.AnuntAditionalFeatures.Where(p => p.Anunt.AnuntId==anuntId).Select(p => p.AditionalFeature);
-         
+            var query = from feature in ctx.AditionalFeatures.Include("Anunts")
+                        from anunt in feature.Anunts
+                        where anunt.AnuntId == anuntId
+                        select feature;
+            return query; 
         }
        public IQueryable<Anunt> AllAnuntsForFeature(int featureId)
         {
-            return ctx.AnuntAditionalFeatures.Where(p => p.AditionalFeature.AditionalFeatureId == featureId)
-                                             .Select(p => p.Anunt);
+            var query = from anunt in ctx.Anunts.Include("AditionalFeatures")
+                        from feature in anunt.AditionalFeatures
+                        where feature.AditionalFeatureId == featureId
+                        select anunt;
+
+
+            return query;
+
+        }
+        public IQueryable<Anunt> AllAnuntsWithMultipleFeatures(int[] features)
+       {
+          //uhhh that was hard
+            return from post in ctx.Anunts.Include("AditionalFeatures")
+                       where
+                           (
+                           from f in features
+                           where
+                               (
+                               from feature in post.AditionalFeatures
+                               where feature.AditionalFeatureId == f
+                               select feature
+                               ).Any() == false
+                           select f
+                           ).Any() == false
+                       select post;
+
         }
 
 

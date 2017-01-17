@@ -79,6 +79,7 @@ namespace Cascade_DDL_TRY.Controllers
             anunts = anunts.Where(p => (search.PriceMin == null ? true : p.Price >= search.PriceMin) &&
                                        (search.PriceMax == null ? true : p.Price <= search.PriceMax) &&
                                        (string.IsNullOrEmpty(search.Fuel) ? true : p.Fuel.ToString() == search.Fuel));
+                                      
             if (anunts.Count() > 0)
             {
                 result = Ok(anunts);
@@ -89,6 +90,56 @@ namespace Cascade_DDL_TRY.Controllers
             }
 
             return result;
+        }
+        [Route("api/MyApi/GetFeaturesForAnunt/{anuntId}")]
+        public IHttpActionResult GetFeaturesForAnunt(int anuntId)
+        {
+            IHttpActionResult result;
+            var features = repo.AllFeaturesFromAnunt(anuntId).ToList();
+            if(features.Count()>0)
+            {
+                result = Ok(features);
+            }
+            else
+            {
+                result = NotFound();
+            }
+            return result;
+        }
+
+
+        [Route("api/MyApi/GetAnuntForFeature/{featureId}")]
+        public IHttpActionResult GetAnuntForFeatures(int featureId)
+        {
+            IHttpActionResult result;
+            var anunts = repo.AllAnuntsForFeature(featureId).ToList();
+            
+            if(anunts.Count() >0)
+            {
+                result = Ok(anunts);
+            }
+            else
+            {
+                result = NotFound();
+            }
+            return result;  
+
+        }
+        [Route("api/MyApi/GetAnuntForFeatures/")]
+        public IHttpActionResult GetAnuntForFeatures([FromUri]int[] features)
+        {
+            IHttpActionResult result;
+            var anunts = repo.AllAnuntsWithMultipleFeatures(features).ToList();
+            if (anunts.Count() > 0)
+            {
+                result = Ok(anunts);
+            }
+            else
+            {
+                result = NotFound();
+            }
+            return result;
+
         }
     }
 }

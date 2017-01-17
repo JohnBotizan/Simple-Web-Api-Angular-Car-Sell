@@ -39,13 +39,24 @@ namespace Cascade_DDL_TRY.Models
         {
             return new AnuntViewModel
             {
-                  AnuntId = anuntul.AnuntId,
-                  Price = anuntul.Price,
-                  Description =  anuntul.AnuntName ,
-                  NameAnunt = anuntul.Modelul.Makeul.MakeName +" "+anuntul.Modelul.ModelulName, 
-                  Fuel = anuntul.Fuel
+                   AnuntId = anuntul.AnuntId,
+                   Price = anuntul.Price,
+                   Description =  anuntul.AnuntName ,
+                   NameAnunt = anuntul.Modelul.Makeul.MakeName +" "+anuntul.Modelul.ModelulName, 
+                   Fuel = anuntul.Fuel, 
+                   AdFeatures = anuntul.AditionalFeatures.Select(p=> Create(p))
             };
         }
+        public AditionalFeaturesViewModel Create(AditionalFeature feature)
+        {
+            return new AditionalFeaturesViewModel
+            {
+                 AditionalFeaturesId= feature.AditionalFeatureId,
+                  FeatureName = feature.NameAditionalFeature
+            };
+        }
+        
+
 
     }
 }

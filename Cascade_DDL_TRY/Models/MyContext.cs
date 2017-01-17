@@ -19,13 +19,13 @@ namespace Cascade_DDL_TRY.Models
             modelBuilder.Configurations.Add(new MakeConfiguration());
             modelBuilder.Configurations.Add(new ModelulConfiguration());
             //modelBuilder.Configurations.Add(new AditionalFeaturesConfiguration());
-            //modelBuilder.Entity<Anunt>()
-            //            .HasMany<AditionalFeatures>(p => p.Features)
-            //            .WithMany(a => a.Anunts)
-            //            .Map(p =>
-            //            {
-            //                p.MapLeftKey("AnuntReferenceId").MapRightKey("AditionalFeatureReferenceId").ToTable("AnuntAditionalFeature");
-            //            });
+            modelBuilder.Entity<Anunt>()
+                        .HasMany<AditionalFeature>(p => p.AditionalFeatures)
+                        .WithMany(a => a.Anunts)
+                        .Map(p =>
+                        {
+                            p.MapLeftKey("AnuntReferenceId").MapRightKey("AditionalFeatureReferenceId").ToTable("AnuntAditionalFeature");
+                        });
         
         
         }
